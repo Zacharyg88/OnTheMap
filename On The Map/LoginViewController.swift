@@ -13,7 +13,6 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginEmail = UITextField()
     @IBOutlet weak var loginPassword = UITextField()
-
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +29,8 @@ class LoginViewController: UIViewController {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"udacity\": {\"username\": \"\(loginEmail?.text)\", \"password\": \"\(loginPassword?.text)\"}}".data(using: String.Encoding.utf8)
-        
+//        request.httpBody = "{\"udacity\": {\"username\": \"\((self.loginEmail?.text)! as String)\", \"password\": \"\((self.loginPassword?.text)! as String)\"}}".data(using: String.Encoding.utf8)
+request.httpBody = "{\"udacity\": {\"username\": \"zacharyg88@gmail.com\", \"password\": \"Clue1388\"}}".data(using: String.Encoding.utf8)        
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
@@ -40,11 +39,24 @@ class LoginViewController: UIViewController {
             }
             let range = Range(5..<data!.count)
             let newData = data?.subdata(in: range)
+          
             print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue) as Any)
-        
+            
+            var parsedResults = [String:AnyObject]()
+            do {
+            parsedResults = try JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as! [String:AnyObject]
+            print(parsedResults)
+            } catch {
+                print("oops!")
+                return
+            }
+            
+            
     }
         task.resume()
     }
+    
+  
     
 }
 

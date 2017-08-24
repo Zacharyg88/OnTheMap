@@ -8,7 +8,12 @@
 
 import Foundation
 
-
+class Constants: NSObject {
+    
+    
+    
+    
+}
 
 
 

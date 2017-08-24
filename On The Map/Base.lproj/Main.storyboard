@@ -15,15 +15,18 @@
         <!--Navigation Controller-->
         <scene sceneID="8Sz-J0-aEu">
             <objects>
-                <navigationController id="ZYC-Uh-rF7" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="mapViewNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZYC-Uh-rF7" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="54p-W3-AIV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <connections>
+                        <segue destination="Flk-4t-0es" kind="relationship" relationship="rootViewController" id="7Oe-4T-qpY"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PKT-gh-YPT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951" y="139"/>
+            <point key="canvasLocation" x="905" y="139"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -65,7 +68,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tly-nV-BfU">
                                 <rect key="frame" x="152" y="377" width="71" height="37"/>
@@ -80,6 +83,7 @@
                                 </state>
                                 <connections>
                                     <action selector="login" destination="BYZ-38-t0r" eventType="touchUpInside" id="Oxu-FX-6jL"/>
+                                    <segue destination="Flk-4t-0es" kind="show" id="QUU-44-5Op"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Don't have an account?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xVo-Y9-H1e">
@@ -99,7 +103,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="HSt-dS-aOH"/>
                                     <constraint firstAttribute="width" constant="343" id="HuC-IU-9d4"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="343" id="thF-Ee-RTG"/>
                                 </constraints>
                                 <color key="tintColor" red="0.058823529411764705" green="0.0039215686274509803" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Sign in with Facebook">
@@ -170,10 +173,10 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="Zgk-Pb-pNr">
             <objects>
-                <viewController id="Flk-4t-0es" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Flk-4t-0es" customClass="MapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="26c-G7-nyf"/>
                         <viewControllerLayoutGuide type="bottom" id="XEq-ld-fPP"/>
@@ -207,6 +210,10 @@
                             <constraint firstItem="hGa-Cg-eTL" firstAttribute="leading" secondItem="Jfe-Tw-n5M" secondAttribute="leadingMargin" id="rgq-jk-CDk"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="DFz-gr-S2p"/>
+                    <connections>
+                        <outlet property="mapView" destination="hGa-Cg-eTL" id="JCQ-gg-EOd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="evu-zE-nYe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -217,4 +224,7 @@
         <image name="BlueUBurn" width="202" height="221"/>
         <image name="mapfadeedit" width="1238" height="1550"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="QUU-44-5Op"/>
+    </inferredMetricsTieBreakers>
 </document>
