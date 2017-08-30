@@ -42,45 +42,41 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as Any)
             
             var parsedResults = [String:Any]()
+            var studentLocations = [[String:Any]]()
             do {
                 parsedResults = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: Any]
             }catch {
                 print("oops!")
                 return
             }
-            print(parsedResults)
+            print("\nparsedResults: \(parsedResults)\n")
+            
+            studentLocations = parsedResults["results"] as! [[String : Any]]
+            
+            print("\nstudentLocations: \(studentLocations)\n")
+            
            // self.mapView?.animatesDrop = true
             var pins = [MKAnnotation]()
             
-//            for i in parsedResults {
-//                let lat = CLLocationDegrees(i["latitude"] as! Double)
-//                let lon = CLLocationDegrees(i["longitude"] as! Double)
-//                
-//                let latlon = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-//                
-//                let userName = "\(i["firstName"] as! String, i["lastName"] as! String)"
-//                let userSite = i["mediaURL"] as! String
-//                
-//                
-//                let pin = MKPointAnnotation()
-//                pin.coordinate = latlon
-//                pin.title = userName
-//                pin.subtitle = userSite
-//                
-//                
-//                pins.append(pin)
-//            }
-//            self.mapView?.addAnnotations(pins)
-          
+            for studentLocation in studentLocations {
+                let lat = CLLocationDegrees(studentLocation["latitude"] as! Double)
+                let lon = CLLocationDegrees(studentLocation["longitude"] as! Double)
+                
+                let latlon = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                
+                let userName = "\(studentLocation["firstName"] as! String, studentLocation["lastName"] as! String)"
+                let userSite = studentLocation["mediaURL"] as! String
                 
                 
-            
-        
-        
-        
-        
-        
-        
+                let pin = MKPointAnnotation()
+                pin.coordinate = latlon
+                pin.title = userName
+                pin.subtitle = userSite
+                
+                
+                pins.append(pin)
+            }
+            self.mapView?.addAnnotations(pins)
         
         }
         task.resume()

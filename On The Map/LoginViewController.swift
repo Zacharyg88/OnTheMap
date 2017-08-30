@@ -25,6 +25,20 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func login() {
+        
+        UdacityClient.sharedInstance().authenticateAppUser((loginEmail?.text)!, (loginPassword?.text)!) { (success, errorString) in
+            
+            if success {
+                // find out if user has a student location in Parse ; store object ID of location
+                
+                // get the last 100 student locations in Parse; store student locations from Parse
+                
+                
+            } else {
+                // display error string in UIAlertView
+            }
+        }
+        
         let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -32,6 +46,7 @@ class LoginViewController: UIViewController {
 //        request.httpBody = "{\"udacity\": {\"username\": \"\((self.loginEmail?.text)! as String)\", \"password\": \"\((self.loginPassword?.text)! as String)\"}}".data(using: String.Encoding.utf8)
 request.httpBody = "{\"udacity\": {\"username\": \"zacharyg88@gmail.com\", \"password\": \"Clue1388\"}}".data(using: String.Encoding.utf8)        
         let session = URLSession.shared
+        
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
                 print(error as Any)

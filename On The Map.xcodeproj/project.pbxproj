@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		922C9EE01F55EE48000DEB37 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922C9EDF1F55EE48000DEB37 /* UdacityClient.swift */; };
+		922C9EE21F55F467000DEB37 /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922C9EE11F55F467000DEB37 /* UdacityConvenience.swift */; };
+		922C9EE41F55FE6A000DEB37 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922C9EE31F55FE6A000DEB37 /* UdacityConstants.swift */; };
 		92BB50A11F4CB0D600C0293B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BB50A01F4CB0D600C0293B /* AppDelegate.swift */; };
 		92BB50A31F4CB0D600C0293B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BB50A21F4CB0D600C0293B /* LoginViewController.swift */; };
 		92BB50A61F4CB0D700C0293B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92BB50A41F4CB0D700C0293B /* Main.storyboard */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		922C9EDF1F55EE48000DEB37 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		922C9EE11F55F467000DEB37 /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
+		922C9EE31F55FE6A000DEB37 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 		92BB509D1F4CB0D600C0293B /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BB50A01F4CB0D600C0293B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92BB50A21F4CB0D600C0293B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +45,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		925330FF1F55EA2100AAB7EC /* UdacityClient */ = {
+			isa = PBXGroup;
+			children = (
+				922C9EDF1F55EE48000DEB37 /* UdacityClient.swift */,
+				922C9EE11F55F467000DEB37 /* UdacityConvenience.swift */,
+				922C9EE31F55FE6A000DEB37 /* UdacityConstants.swift */,
+			);
+			name = UdacityClient;
+			sourceTree = "<group>";
+		};
+		925331001F55EA4600AAB7EC /* ParseClient */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ParseClient;
+			sourceTree = "<group>";
+		};
 		92BB50941F4CB0D500C0293B = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +81,8 @@
 		92BB509F1F4CB0D600C0293B /* On The Map */ = {
 			isa = PBXGroup;
 			children = (
+				925331001F55EA4600AAB7EC /* ParseClient */,
+				925330FF1F55EA2100AAB7EC /* UdacityClient */,
 				92BB50A01F4CB0D600C0293B /* AppDelegate.swift */,
 				92BB50A21F4CB0D600C0293B /* LoginViewController.swift */,
 				92BB50B41F4DDF5700C0293B /* MapViewController.swift */,
@@ -142,10 +167,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922C9EE01F55EE48000DEB37 /* UdacityClient.swift in Sources */,
+				922C9EE41F55FE6A000DEB37 /* UdacityConstants.swift in Sources */,
 				92BB50A31F4CB0D600C0293B /* LoginViewController.swift in Sources */,
 				92BB50A11F4CB0D600C0293B /* AppDelegate.swift in Sources */,
 				92BB50B51F4DDF5800C0293B /* MapViewController.swift in Sources */,
 				92BB50B71F4E030A00C0293B /* Constants.swift in Sources */,
+				922C9EE21F55F467000DEB37 /* UdacityConvenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +335,7 @@
 				92BB50B11F4CB0D700C0293B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
