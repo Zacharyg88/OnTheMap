@@ -34,9 +34,43 @@ class UdacityClient: NSObject {
     // MARK: TODO - Create a taskForPostSession
     
     // used for logging in to Udacity
-    func taskForPostSession (_ userName: String, _ password: String, completionHandlerforTaskForPostSession: (_ result: AnyObject?, _ error: NSError?)->Void) { // MARK: TODO; Determine the necessary parameters
+    func taskForPostSession (_ userName: String, _ password: String, completionHandlerforTaskForPostSession: @escaping (_ result: AnyObject?, _ error: NSError?)->Void) { // MARK: TODO; Determine the necessary parameters
+    
+        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = "{\"udacity\": {\"username\": \"\((userName) as String)\", \"password\": \"\((password) as String)\"}}".data(using: String.Encoding.utf8)
+//        request.httpBody = "{\"udacity\": {\"username\": \"zacharyg88@gmail.com\", \"password\": \"Clue1388\"}}".data(using: String.Encoding.utf8)
+        let session = URLSession.shared
         
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                print(error as Any)
+                return
+            }
+            let range = Range(5..<data!.count)
+            let newData = data?.subdata(in: range)
+            
+            print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue) as Any)
+            
+            var parsedResults = [String:AnyObject]()
+            do {
+                parsedResults = try JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as! [String:AnyObject]
+                print(parsedResults)
+            } catch {
+                print("oops!")
+                return
+            }
+            
+            completionHandlerforTaskForPostSession(parsedResults as AnyObject?, error as NSError?)
+            
+            
+        }
+        task.resume()
     }
+
+    
     
     
     // MARK: TODO - Create a taskForDeleteSession
@@ -47,10 +81,31 @@ class UdacityClient: NSObject {
     
     // MARK: TODO - Create a taskForGetPublicUserData
     
-    func taskForGetPublicUserData() { // MARK: TODO; Determine the necessary parameters
+    func taskForGetPublicUserData(_ userID: String, completionHandlerFortaskForGetPublicUserData: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) { // MARK: TODO; Determine the necessary parameters
         
+        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/users/\(userID)")!)
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            if error != nil {
+                print("Get Public User Data Error = \(error)")
+                return
+            }
+            let range = Range(5..<data!.count)
+            let newData = data?.subdata(in: range)
+            print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue)!)
+            
+            var parsedResults = [String: AnyObject]()
+            do {
+                parsedResults = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as! [String: AnyObject]
+            }catch {
+                print("Couldn't Parse Public User Data JSON")
+                return
+            }
+            completionHandlerFortaskForGetPublicUserData(parsedResults, error)
+        }
+        task.resume()
     }
-    
+}
     // MARK: Shared Instance
     
     class func sharedInstance() -> UdacityClient {
@@ -60,4 +115,3 @@ class UdacityClient: NSObject {
         return Singleton.sharedInstance
     }
 
-}

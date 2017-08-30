@@ -22,8 +22,21 @@ extension UdacityClient {
         taskForPostSession(email, password) { (parsedResult, error) in
             
           // using guard statement or other tests, if there's no error and the parsedResult is valid
-            //extract account id and store as user's udacityID in UdacityClient
-            //extract session id and store in UdacityClient
+            if error != nil {
+                print("\(error)")
+            }else {
+            var sessionData = parsedResult?["session"] as! [String: AnyObject]
+            var accountData = parsedResult?["account"] as! [String: AnyObject]
+                
+                udacityConstants.userID = accountData["key"] as! String
+                udacityConstants.sessionID = sessionData["id"] as! String
+                
+                if accountData["registered"] = true {
+                    convenienecMethodForAuthenticateAppUser(true, "")
+                }else{
+                    convenienecMethodForAuthenticateAppUser(false,"\(error)")
+                }
+            }
             
          //either way, call convenienecMethodForAuthenticateAppUser  and pass appropriate data
             
@@ -34,7 +47,24 @@ extension UdacityClient {
     
     // MARK: TODO - create a convenience method for retrieving the first_name and last_name from the Public User Data
     // WHen succssful, I ahve saved the user's first_name and last_name
-    func getFirstAndLastName ( udacityID:String) {
+    func getFirstAndLastName ( udacityID:String, convenienceMethodForGetUserData: (_ success: Bool, _ errorString: String) -> Void) {
+        taskForGetPublicUserData(udacityID) { (parsedResult, error) in
+            
+            if error != nil {
+                convenienceMethodForGetUserData(False, "There was an Error at GetFirstAndLastName")
+            }else {
+                let firstName = parsedResult["first_name"] as String
+                let userInfo = parsedResult["user"] as AnyObject
+                let lastName = userInfo["last_name"] as String
+                
+                udacityConstants.firstName = firstName
+                udacityConstants.lastName = lastName
+                
+                convenienceMethodForGetUserData(True, "")
+            }
+            
+            
+        }
         
     }
     
