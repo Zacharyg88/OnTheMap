@@ -8,10 +8,11 @@
 
 import UIKit
 
-extension parseClient {
+extension ParseClient {
     
     struct parseConstants {
-        
+        static var studentLocations = [[String: AnyObject]]()
+    
     }
     
 }

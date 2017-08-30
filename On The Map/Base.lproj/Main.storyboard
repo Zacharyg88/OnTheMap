@@ -97,19 +97,6 @@
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AoF-YX-rSm">
-                                <rect key="frame" x="16" y="614" width="343" height="33"/>
-                                <color key="backgroundColor" red="0.16862745098039217" green="0.31372549019607843" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="HSt-dS-aOH"/>
-                                    <constraint firstAttribute="width" constant="343" id="HuC-IU-9d4"/>
-                                </constraints>
-                                <color key="tintColor" red="0.058823529411764705" green="0.0039215686274509803" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Sign in with Facebook">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" red="0.058751048657718123" green="0.0" blue="0.86228502516778527" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlueUBurn" translatesAutoresizingMaskIntoConstraints="NO" id="E0J-Ar-ib1">
                                 <rect key="frame" x="120" y="28" width="135" height="151"/>
                                 <constraints>
@@ -143,16 +130,12 @@
                             <constraint firstItem="LQK-X6-AWO" firstAttribute="top" secondItem="idQ-1m-aRR" secondAttribute="bottom" constant="27" id="I3l-Io-VUY"/>
                             <constraint firstItem="tly-nV-BfU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="377" id="Jb1-oP-lqm"/>
                             <constraint firstItem="LQK-X6-AWO" firstAttribute="top" secondItem="idQ-1m-aRR" secondAttribute="bottom" constant="27" id="Jq6-Kq-26U"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="AoF-YX-rSm" secondAttribute="bottom" constant="20" id="K7L-iy-R73"/>
                             <constraint firstAttribute="bottomMargin" secondItem="xVo-Y9-H1e" secondAttribute="bottom" constant="158" id="M77-Nz-sw2"/>
                             <constraint firstItem="LQK-X6-AWO" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="O2b-Fx-P4G"/>
                             <constraint firstItem="spp-oA-ex8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="479" id="O7E-zt-HmC"/>
-                            <constraint firstItem="AoF-YX-rSm" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Qgv-xd-8tu"/>
                             <constraint firstAttribute="bottomMargin" secondItem="tly-nV-BfU" secondAttribute="bottom" constant="253" id="RiV-1D-27x"/>
                             <constraint firstAttribute="trailingMargin" secondItem="E0J-Ar-ib1" secondAttribute="trailing" constant="104" id="Y0Z-uA-ZIq"/>
-                            <constraint firstItem="AoF-YX-rSm" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="614" id="YPN-b3-lgr"/>
                             <constraint firstItem="idQ-1m-aRR" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Z0v-z8-e7u"/>
-                            <constraint firstItem="AoF-YX-rSm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="c2R-MH-p1Y"/>
                             <constraint firstItem="idQ-1m-aRR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ecx-iP-LXu"/>
                             <constraint firstItem="xVo-Y9-H1e" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="hBw-FE-uMz"/>
                             <constraint firstItem="tly-nV-BfU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="136" id="hqF-ao-sTv"/>

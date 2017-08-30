@@ -29,6 +29,15 @@ class LoginViewController: UIViewController {
         UdacityClient.sharedInstance().authenticateAppUser((loginEmail?.text)!, (loginPassword?.text)!) { (success, errorString) in
             
             if success {
+                UdacityClient.sharedInstance().getFirstAndLastName(udacityID: UdacityClient.sharedInstance().udacityUserID, convenienceMethodForGetUserData: { (success, errorString) in
+                    
+                    if success {
+                        print("Success!")
+                    }else {
+                        print("Failure")
+                    }
+                    
+                })
                 // find out if user has a student location in Parse ; store object ID of location
                 
                 // get the last 100 student locations in Parse; store student locations from Parse
@@ -38,8 +47,5 @@ class LoginViewController: UIViewController {
                 // display error string in UIAlertView
             }
         }
-        
-          
-    
+    }
 }
-
