@@ -52,12 +52,12 @@ class UdacityClient: NSObject {
             let range = Range(5..<data!.count)
             let newData = data?.subdata(in: range)
             
-            print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue) as Any)
+            //print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue) as Any)
             
             var parsedResults = [String:AnyObject]()
             do {
                 parsedResults = try JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as! [String:AnyObject]
-                print(parsedResults)
+                //print(parsedResults)
             } catch {
                 print("oops!")
                 return
@@ -93,7 +93,7 @@ class UdacityClient: NSObject {
             }
             let range = Range(5..<data!.count)
             let newData = data?.subdata(in: range) /* subset response data! */
-            print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue)!)
+            //print(NSString(data: newData!, encoding: String.Encoding.utf8.rawValue)!)
             
             var parsedResult = [String: AnyObject]()
             
@@ -130,8 +130,8 @@ class UdacityClient: NSObject {
                 print("Couldn't Parse Public User Data JSON")
                 return
             }
-            print("\(parsedResults)")
-            print("The User ID is \(userID)")
+            //print("\(parsedResults)")
+            //print("The User ID is \(userID)")
             completionHandlerFortaskForGetPublicUserData(parsedResults as AnyObject?, error as NSError?)
         }
         task.resume()

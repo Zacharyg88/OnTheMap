@@ -58,15 +58,20 @@ extension UdacityClient {
             if error != nil {
                 convenienceMethodForGetUserData(false, "There was an Error at GetFirstAndLastName")
             }else {
-                print("The User ID is \(udacityID)")
-//                let firstName = parsedResult?["first_name"] as! String
-//                let userInfo = parsedResult?["user"] as AnyObject
-//                let lastName = userInfo["last_name"] as! String
-//                
-//                udacityConstants.firstName = firstName
-//                print(udacityConstants.firstName)
-//                udacityConstants.lastName = lastName
-//                print(udacityConstants.lastName)
+                //print("The User ID is \(udacityID)")
+                print(parsedResult)
+                
+                
+                let userInfo = parsedResult?["user"] as AnyObject
+                let firstName = userInfo["first_name"] as! String
+                let lastName = userInfo["last_name"] as! String
+                
+                //print("\(firstName),\(lastName)")
+                
+                udacityConstants.firstName = firstName
+                print(udacityConstants.firstName)
+                udacityConstants.lastName = lastName
+                print(udacityConstants.lastName)
                 
                 convenienceMethodForGetUserData(true, "")
             }

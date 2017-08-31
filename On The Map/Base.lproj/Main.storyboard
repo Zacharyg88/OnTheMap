@@ -26,7 +26,35 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PKT-gh-YPT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="905" y="139"/>
+            <point key="canvasLocation" x="882" y="139"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="c0N-kh-jh4">
+            <objects>
+                <tableViewController id="2zC-jz-DqD" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="U1D-MG-Hdr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="YMk-dp-C5E">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YMk-dp-C5E" id="e0G-BH-FZQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2zC-jz-DqD" id="cLW-Se-sTc"/>
+                            <outlet property="delegate" destination="2zC-jz-DqD" id="sbx-dD-OXE"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ang-ko-EJ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1681" y="139"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -83,7 +111,6 @@
                                 </state>
                                 <connections>
                                     <action selector="login" destination="BYZ-38-t0r" eventType="touchUpInside" id="Oxu-FX-6jL"/>
-                                    <segue destination="Flk-4t-0es" kind="show" id="QUU-44-5Op"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Don't have an account?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xVo-Y9-H1e">
@@ -150,6 +177,7 @@
                     <connections>
                         <outlet property="loginEmail" destination="idQ-1m-aRR" id="1Cp-Om-hEY"/>
                         <outlet property="loginPassword" destination="LQK-X6-AWO" id="CHC-r8-Wi9"/>
+                        <segue destination="ZYC-Uh-rF7" kind="show" identifier="presentNavigationController" id="OKb-Np-GKa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -207,7 +235,4 @@
         <image name="BlueUBurn" width="202" height="221"/>
         <image name="mapfadeedit" width="1238" height="1550"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="QUU-44-5Op"/>
-    </inferredMetricsTieBreakers>
 </document>

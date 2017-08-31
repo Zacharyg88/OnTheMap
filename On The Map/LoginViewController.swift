@@ -13,7 +13,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginEmail = UITextField()
     @IBOutlet weak var loginPassword = UITextField()
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loginEmail?.text = "Zacharyg88@gmail.com"
@@ -29,13 +29,26 @@ class LoginViewController: UIViewController {
     @IBAction func login() {
         
         UdacityClient.sharedInstance().authenticateAppUser((loginEmail?.text)!, (loginPassword?.text)!) { (success, errorString) in
-            print(UdacityClient.sharedInstance().udacityUserID)
+            
             if success {
-                let userID = UdacityClient.sharedInstance().udacityUserID as String
-                print("The User ID is \(userID)")
+                let userID = UdacityClient.udacityConstants.userID
+                //print("The User ID is \(userID)")
                 UdacityClient.sharedInstance().getFirstAndLastName(udacityID: userID, convenienceMethodForGetUserData: { (success, errorString) in
                     
                     if success {
+                        ParseClient.sharedInstance().populateMap(convenienceMethodForHandlerForPopulateMap: { (success, errorString) in
+                            if success{
+                                print("yay")
+                                //MapViewController = [super.initWithNibName: "mapVC", bundle: nil]
+                                OperationQueue.main.addOperation {
+                                    self.performSegue(withIdentifier: "presentNavigationController", sender: self)
+                                }
+                                
+                                
+                            }else {
+                                print("Oh No")
+                            }
+                        })
                         print("Success!")
                     }else {
                         print("Failure")

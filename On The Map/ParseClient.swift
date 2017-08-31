@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
-class ParseClient: NSObject{
+class ParseClient: NSObject, MKMapViewDelegate{
     
-    func taskForGetStudentLocations(completionHandlerForGetStudentLocations: @escaping (_ results: AnyObject, _ error: NSError) -> Void) {
+    func taskForGetStudentLocations(completionHandlerForGetStudentLocations: @escaping (_ results: AnyObject, _ error: NSError?) -> Void) {
         let parseURL = URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100")
         
-        var request = NSMutableURLRequest(url:parseURL!)
+        let request = NSMutableURLRequest(url:parseURL!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
@@ -23,7 +24,6 @@ class ParseClient: NSObject{
                 print(error as Any)
                 return
             }
-            //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as Any)
             
             var parsedResults = [String:Any]()
             var studentLocations = [[String:Any]]()
@@ -33,14 +33,15 @@ class ParseClient: NSObject{
                 print("oops!")
                 return
             }
-            print("\nparsedResults: \(parsedResults)\n")
+            //print("\nparsedResults: \(parsedResults)\n")
             
             studentLocations = parsedResults["results"] as! [[String : Any]]
             
             print("\nstudentLocations: \(studentLocations)\n")
-            completionHandlerForGetStudentLocations(studentLocations as AnyObject, error as! NSError)
             
-            // self.mapView?.animatesDrop = true
+            completionHandlerForGetStudentLocations(studentLocations as AnyObject, error as NSError?)
+            
+
             }
         task.resume()
 
