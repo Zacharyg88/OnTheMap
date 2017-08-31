@@ -46,7 +46,7 @@ class UdacityClient: NSObject {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
-                print(error as Any)
+                print("There was an Error at Login Data Request: \(error as Any)")
                 return
             }
             let range = Range(5..<data!.count)
@@ -113,7 +113,7 @@ class UdacityClient: NSObject {
     
     func taskForGetPublicUserData(_ userID: String, completionHandlerFortaskForGetPublicUserData: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) { // MARK: TODO; Determine the necessary parameters
         
-        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/users/\(userID)")!)
+        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/users/\(userID as String)")!)
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             if error != nil {
@@ -131,6 +131,7 @@ class UdacityClient: NSObject {
                 return
             }
             print("\(parsedResults)")
+            print("The User ID is \(userID)")
             completionHandlerFortaskForGetPublicUserData(parsedResults as AnyObject?, error as NSError?)
         }
         task.resume()

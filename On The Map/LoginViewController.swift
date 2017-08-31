@@ -16,6 +16,8 @@ class LoginViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginEmail?.text = "Zacharyg88@gmail.com"
+        loginPassword?.text = "Clue1388"
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -27,9 +29,11 @@ class LoginViewController: UIViewController {
     @IBAction func login() {
         
         UdacityClient.sharedInstance().authenticateAppUser((loginEmail?.text)!, (loginPassword?.text)!) { (success, errorString) in
-            
+            print(UdacityClient.sharedInstance().udacityUserID)
             if success {
-                UdacityClient.sharedInstance().getFirstAndLastName(udacityID: UdacityClient.sharedInstance().udacityUserID, convenienceMethodForGetUserData: { (success, errorString) in
+                let userID = UdacityClient.sharedInstance().udacityUserID as String
+                print("The User ID is \(userID)")
+                UdacityClient.sharedInstance().getFirstAndLastName(udacityID: userID, convenienceMethodForGetUserData: { (success, errorString) in
                     
                     if success {
                         print("Success!")
