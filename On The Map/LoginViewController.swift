@@ -16,16 +16,13 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginEmail?.text = "Zacharyg88@gmail.com"
-        loginPassword?.text = "Clue1388"
-        // Do any additional setup after loading the view, typically from a nib.
+//        loginEmail?.text = "Zacharyg88@gmail.com"
+//        loginPassword?.text = ""
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
+    
     @IBAction func login() {
         
         UdacityClient.sharedInstance().authenticateAppUser((loginEmail?.text)!, (loginPassword?.text)!) { (success, errorString) in
@@ -41,9 +38,8 @@ class LoginViewController: UIViewController {
                                 print("yay")
                                 //MapViewController = [super.initWithNibName: "mapVC", bundle: nil]
                                 OperationQueue.main.addOperation {
-                                    self.performSegue(withIdentifier: "presentNavigationController", sender: self)
+                                    self.performSegue(withIdentifier: "presentTabController", sender: self)
                                 }
-                                
                                 
                             }else {
                                 print("Oh No")
@@ -55,13 +51,9 @@ class LoginViewController: UIViewController {
                     }
                     
                 })
-                // find out if user has a student location in Parse ; store object ID of location
-                
-                // get the last 100 student locations in Parse; store student locations from Parse
-                
-                
+
             } else {
-                // display error string in UIAlertView
+                print("There Was an Error Logging In")
             }
         }
     }

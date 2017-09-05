@@ -19,7 +19,7 @@
 		92BB50A81F4CB0D700C0293B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92BB50A71F4CB0D700C0293B /* Assets.xcassets */; };
 		92BB50AB1F4CB0D700C0293B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92BB50A91F4CB0D700C0293B /* LaunchScreen.storyboard */; };
 		92BB50B51F4DDF5800C0293B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BB50B41F4DDF5700C0293B /* MapViewController.swift */; };
-		92BB50B71F4E030A00C0293B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BB50B61F4E030A00C0293B /* Constants.swift */; };
+		92C85E4D1F58A45800CF08F8 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C85E4C1F58A45800CF08F8 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +37,7 @@
 		92BB50AA1F4CB0D700C0293B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92BB50AC1F4CB0D700C0293B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92BB50B41F4DDF5700C0293B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		92BB50B61F4E030A00C0293B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		92C85E4C1F58A45800CF08F8 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,18 +90,26 @@
 		92BB509F1F4CB0D600C0293B /* On The Map */ = {
 			isa = PBXGroup;
 			children = (
+				92C85E4B1F58A42100CF08F8 /* Controllers */,
 				925331001F55EA4600AAB7EC /* ParseClient */,
 				925330FF1F55EA2100AAB7EC /* UdacityClient */,
 				92BB50A01F4CB0D600C0293B /* AppDelegate.swift */,
-				92BB50A21F4CB0D600C0293B /* LoginViewController.swift */,
-				92BB50B41F4DDF5700C0293B /* MapViewController.swift */,
 				92BB50A41F4CB0D700C0293B /* Main.storyboard */,
-				92BB50B61F4E030A00C0293B /* Constants.swift */,
 				92BB50A71F4CB0D700C0293B /* Assets.xcassets */,
 				92BB50A91F4CB0D700C0293B /* LaunchScreen.storyboard */,
 				92BB50AC1F4CB0D700C0293B /* Info.plist */,
 			);
 			path = "On The Map";
+			sourceTree = "<group>";
+		};
+		92C85E4B1F58A42100CF08F8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				92BB50B41F4DDF5700C0293B /* MapViewController.swift */,
+				92BB50A21F4CB0D600C0293B /* LoginViewController.swift */,
+				92C85E4C1F58A45800CF08F8 /* TableViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,7 +190,7 @@
 				922C9EEA1F5710A3000DEB37 /* ParseConstants.swift in Sources */,
 				92BB50A11F4CB0D600C0293B /* AppDelegate.swift in Sources */,
 				92BB50B51F4DDF5800C0293B /* MapViewController.swift in Sources */,
-				92BB50B71F4E030A00C0293B /* Constants.swift in Sources */,
+				92C85E4D1F58A45800CF08F8 /* TableViewController.swift in Sources */,
 				922C9EE61F571053000DEB37 /* ParseClient.swift in Sources */,
 				922C9EE81F57107F000DEB37 /* ParseConvenience.swift in Sources */,
 				922C9EE21F55F467000DEB37 /* UdacityConvenience.swift in Sources */,

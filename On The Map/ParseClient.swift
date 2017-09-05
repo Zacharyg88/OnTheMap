@@ -33,18 +33,14 @@ class ParseClient: NSObject, MKMapViewDelegate{
                 print("oops!")
                 return
             }
-            //print("\nparsedResults: \(parsedResults)\n")
             
             studentLocations = parsedResults["results"] as! [[String : Any]]
             
             print("\nstudentLocations: \(studentLocations)\n")
             
             completionHandlerForGetStudentLocations(studentLocations as AnyObject, error as NSError?)
-            
-
-            }
+        }
         task.resume()
-
     }
     class func sharedInstance() -> ParseClient {
         struct Singleton {
@@ -52,7 +48,4 @@ class ParseClient: NSObject, MKMapViewDelegate{
         }
         return Singleton.sharedInstance
     }
-
-
-
 }

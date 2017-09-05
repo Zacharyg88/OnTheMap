@@ -15,9 +15,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var logoutButton = UIBarButtonItem()
     @IBOutlet weak var refreshButton = UIBarButtonItem()
     @IBOutlet weak var dropPinButton = UIBarButtonItem()
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -63,10 +61,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             return pinView
         }
-        
-        
-        // This delegate method is implemented to respond to taps. It opens the system browser
-        // to the URL specified in the annotationViews subtitle property.
+
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
             if control == view.rightCalloutAccessoryView {
                 let app = UIApplication.shared
@@ -76,29 +71,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         }
-
+        
     }
-    
 
-    
-    
-    
-        @IBAction func logout() {
-            UdacityClient.sharedInstance().logoutOfUdacity { (success, errorString) in
-                if success {
-                    
-                    
-                } else {
-                    
-                }
+    @IBAction func logout() {
+        UdacityClient.sharedInstance().logoutOfUdacity { (success, errorString) in
+            if success {
+                self.performSegue(withIdentifier: "logoutSegue", sender: self)
+                
+            } else {
+                print("Couldn't Logout")
             }
         }
-        
-        
-        
-        
     }
     
     
+    
+    
+}
+
+
 
 
