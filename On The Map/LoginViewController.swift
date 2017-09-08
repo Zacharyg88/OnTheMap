@@ -16,8 +16,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        loginEmail?.text = "Zacharyg88@gmail.com"
-//        loginPassword?.text = ""
+        loginEmail?.text = "Zacharyg88@gmail.com"
+        loginPassword?.text = "Clue1388"
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

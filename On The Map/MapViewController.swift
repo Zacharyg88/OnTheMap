@@ -23,25 +23,33 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         var pins = [MKAnnotation]()
         
         for studentLocation in ParseClient.parseConstants.studentLocations {
-            let lat = CLLocationDegrees(studentLocation["latitude"] as! Double)
-            let lon = CLLocationDegrees(studentLocation["longitude"] as! Double)
+            print(studentLocation)
+            if let latitude = studentLocation["latitude"] as? Double {
+                if let longitude = studentLocation["longitude"] as? Double {
+                    let lat = CLLocationDegrees(latitude)
+                    let lon = CLLocationDegrees(longitude)
             
-            let latlon = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                    let latlon = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             
-            let userName = "\(studentLocation["firstName"] as! String, studentLocation["lastName"] as! String)"
-            let userSite = studentLocation["mediaURL"] as! String
-            
-            
-            let pin = MKPointAnnotation()
-            pin.coordinate = latlon
-            pin.title = userName
-            pin.subtitle = userSite
+                    let userName = "\(studentLocation["firstName"], studentLocation["lastName"])"
+                    let userSite = studentLocation["mediaURL"] as! String
             
             
-            pins.append(pin)
-            print("The Student Location as Pins is = \(pins)")
+                    let pin = MKPointAnnotation()
+                    pin.coordinate = latlon
+                    pin.title = userName
+                    pin.subtitle = userSite
+            
+            
+                    pins.append(pin)
+                }
+            }
         }
+        print(pins)
+        ParseClient.parseConstants.pins = pins
         self.mapView?.addAnnotations(pins)
+                
+            
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             
@@ -66,7 +74,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             if control == view.rightCalloutAccessoryView {
                 let app = UIApplication.shared
                 if let toOpen = view.annotation?.subtitle! {
-                    //app.openURL(URL(string: toOpen)!)
                     app.open(URL(string: toOpen)!, options: [String:AnyObject](), completionHandler: nil)
                 }
             }
