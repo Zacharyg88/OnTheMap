@@ -18,15 +18,18 @@ extension UdacityClient {
         taskForPostSession(email, password) { (parsedResult, error) in
             
             if error != nil {
-                print("\(error)")
-            }else {
-                var sessionData = parsedResult?["session"] as! [String: AnyObject]
-                var accountData = parsedResult?["account"] as! [String: AnyObject]
+                print("There was an error! - \(error)")
+                return
+            } else {
+                guard var sessionData = parsedResult?["session"] as! [String: AnyObject]! else{
+                return
+                }
+                guard var accountData = parsedResult?["account"] as! [String: AnyObject]! else {
+                    return
+                }
                 
                 udacityConstants.userID = accountData["key"] as! String
-                print(" The user ID is \(udacityConstants.userID) ")
                 udacityConstants.sessionID = sessionData["id"] as! String
-                print("The Session ID is \(udacityConstants.sessionID)")
                 var registered = Bool()
                 registered = accountData["registered"] as! Bool
                 if registered == true{
@@ -35,6 +38,7 @@ extension UdacityClient {
                 }else{
                     convenienecMethodForAuthenticateAppUser(false,"\(error)")
                 }
+            
             }
         }
     }

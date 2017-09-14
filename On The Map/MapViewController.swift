@@ -13,12 +13,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView = MKMapView()
     @IBOutlet weak var logoutButton = UIBarButtonItem()
-    @IBOutlet weak var refreshButton = UIBarButtonItem()
     @IBOutlet weak var dropPinButton = UIBarButtonItem()
 
+    
+    let mediaWebView = mediaURLWebView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView?.delegate = self
     }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("map view select function working")
+       view.canShowCallout = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(calloutTapped(sender:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        view.removeGestureRecognizer((view.gestureRecognizers?.first)!)
+    }
+    
+    func calloutTapped(sender: UITapGestureRecognizer) {
+        let view = sender.view as! MKAnnotationView
+        if let annotation = view.annotation as? MKPointAnnotation {
+            ParseClient.parseConstants.currentMediaURL = annotation.subtitle!
+            performSegue(withIdentifier: "mediaURLSegue", sender: annotation)
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         var pins = [MKAnnotation]()
         
@@ -31,7 +53,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
                     let latlon = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             
-                    let userName = "\(studentLocation["firstName"], studentLocation["lastName"])"
+                    let userName = "\(studentLocation["firstName"] as! String, studentLocation["lastName"] as! String)"
                     let userSite = studentLocation["mediaURL"] as! String
             
             
@@ -45,7 +67,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         }
-        print(pins)
         ParseClient.parseConstants.pins = pins
         self.mapView?.addAnnotations(pins)
                 
@@ -62,6 +83,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 pinView!.canShowCallout = true
                 pinView!.pinTintColor = .red
                 pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+                pinView!.rightCalloutAccessoryView?.backgroundColor = UIColor.cyan
             }
             else {
                 pinView!.annotation = annotation
@@ -91,6 +113,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
+    
+    @IBAction func showDropPinController () {
+        performSegue(withIdentifier: "ShowDropPinView", sender: self)
+    }
+    
+    
     
     
     

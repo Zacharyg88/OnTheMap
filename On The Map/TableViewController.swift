@@ -11,22 +11,32 @@ import UIKit
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var logoutButton = UIBarButtonItem()
+    @IBOutlet weak var tableView = UITableView()
     
 
     let students = ParseClient.parseConstants.studentLocations
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //print(students)
+        tableView?.delegate = self
+        tableView?.dataSource = self
+    
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+        return self.students.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        let student = students[(indexPath as NSIndexPath).row]
+        let student = self.students[(indexPath as NSIndexPath).row]
+        //print(student)
         
+        if student["lastName"] != nil && student["firstName"] != nil && student["mediaURL"] != nil {
         cell?.textLabel?.text = "\(student["lastName"] as! String, (student["firstName"]) as! String)"
         cell?.detailTextLabel?.text = "\(student["mediaURL"] as! String)"
-        
+        }
         return cell!
     }
 

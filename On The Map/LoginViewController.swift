@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var loginEmail = UITextField()
@@ -18,9 +18,21 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         loginEmail?.text = "Zacharyg88@gmail.com"
         loginPassword?.text = "Clue1388"
+        loginEmail?.delegate = self
+        loginPassword?.delegate = self
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        loginPassword?.resignFirstResponder()
+        loginEmail?.resignFirstResponder()
+        return true
+    }
+    
+    @IBAction func signUP() {
+        performSegue(withIdentifier: "signUpSegue", sender: self)
     }
     
     @IBAction func login() {
@@ -29,31 +41,35 @@ class LoginViewController: UIViewController {
             
             if success {
                 let userID = UdacityClient.udacityConstants.userID
-                //print("The User ID is \(userID)")
                 UdacityClient.sharedInstance().getFirstAndLastName(udacityID: userID, convenienceMethodForGetUserData: { (success, errorString) in
                     
                     if success {
                         ParseClient.sharedInstance().populateMap(convenienceMethodForHandlerForPopulateMap: { (success, errorString) in
                             if success{
-                                print("yay")
-                                //MapViewController = [super.initWithNibName: "mapVC", bundle: nil]
                                 OperationQueue.main.addOperation {
                                     self.performSegue(withIdentifier: "presentTabController", sender: self)
                                 }
                                 
                             }else {
-                                print("Oh No")
+                                let alert = UIAlertController(title: "Oops!", message: "There was a problem logging in. Please try again!", preferredStyle: UIAlertControllerStyle.alert)
+                                alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.cancel, handler: nil))
+                                    alert.addAction(UIAlertAction(title: "Sign Up!", style: UIAlertActionStyle.default, handler: { action in
+                                        
+                                        self.performSegue(withIdentifier: "signUpSegue", sender: self)
+                                    }))
+                                self.present(alert, animated: true, completion: nil)
                             }
-                        })
+                        
+                         
                         print("Success!")
-                    }else {
+                        }
+                    )}
+                    else {
                         print("Failure")
                     }
                     
                 })
 
-            } else {
-                print("There Was an Error Logging In")
             }
         }
     }

@@ -18,6 +18,7 @@ extension UdacityClient {
         static var sessionID = ""
         static var firstName = ""
         static var lastName = ""
+        static var mapString = ""
         
     }
 }

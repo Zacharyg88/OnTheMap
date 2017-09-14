@@ -13,6 +13,7 @@ extension ParseClient {
     struct parseConstants {
         static var studentLocations = [[String: AnyObject]]()
         static var pins = [AnyObject]()
+        static var currentMediaURL = String()
     }
     
 }
