@@ -13,13 +13,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var loginEmail = UITextField()
     @IBOutlet weak var loginPassword = UITextField()
+    @IBOutlet weak var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginEmail?.delegate = self
         loginEmail?.text = "Zacharyg88@gmail.com"
         loginPassword?.text = "Clue1388"
-        loginEmail?.delegate = self
         loginPassword?.delegate = self
+        activityIndicator?.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        subscribeToKeyboardNotifications()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        unsubcribeToKeyboardNotificaitons()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -36,6 +47,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func login() {
+        activityIndicator?.isHidden = false
+        activityIndicator?.startAnimating()
+        loginPassword?.resignFirstResponder()
+        loginEmail?.resignFirstResponder()
         
         UdacityClient.sharedInstance().authenticateAppUser((loginEmail?.text)!, (loginPassword?.text)!) { (success, errorString) in
             
@@ -53,24 +68,73 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             }else {
                                 let alert = UIAlertController(title: "Oops!", message: "There was a problem logging in. Please try again!", preferredStyle: UIAlertControllerStyle.alert)
                                 alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.cancel, handler: nil))
-                                    alert.addAction(UIAlertAction(title: "Sign Up!", style: UIAlertActionStyle.default, handler: { action in
-                                        
-                                        self.performSegue(withIdentifier: "signUpSegue", sender: self)
-                                    }))
+                                alert.addAction(UIAlertAction(title: "Sign Up!", style: UIAlertActionStyle.default, handler: { action in
+                                    
+                                    self.performSegue(withIdentifier: "signUpSegue", sender: self)
+                                }))
                                 self.present(alert, animated: true, completion: nil)
                             }
-                        
-                         
-                        print("Success!")
+                            
+                            self.activityIndicator?.stopAnimating()
+                            print("Success!")
                         }
-                    )}
+                        )}
                     else {
-                        print("Failure")
+                        let alert = UIAlertController(title: "Oops!", message: "There was a problem loggin in. Please try again!", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "Sign Up!", style: UIAlertActionStyle.default, handler: { action in
+                            
+                            self.performSegue(withIdentifier: "signUpSegue", sender: self)
+                        }))
+                        
+                        self.present(alert, animated: true, completion: nil)
                     }
                     
                 })
-
+                
+            } else {
+                
+                let alert = UIAlertController(title: "Login Failed", message: "Couldn't authenticate with the given information, please try again!", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.cancel, handler: { action in                    self.activityIndicator?.isHidden = true
+                    self.activityIndicator?.stopAnimating()
+                }))
+                alert.addAction(UIAlertAction(title: "Sign Up!", style: UIAlertActionStyle.default, handler: { action in
+                    self.activityIndicator?.isHidden = true
+                    self.activityIndicator?.stopAnimating()
+                    self.performSegue(withIdentifier: "signUpSegue", sender: self)
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
+    
+    func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
+        
+    }
+    
+    func keyboardWillShow(_ notification: Notification) {
+            view.frame.origin.y = 0 - getKeyboardHeight(notification)
+    }
+    
+    func keyboardWillHide (_ notification: Notification) {
+        
+        view.frame.origin.y = 0.0
+    }
+    
+    
+    
+    func subscribeToKeyboardNotifications () {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    func unsubcribeToKeyboardNotificaitons () {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
+
 }

@@ -17,12 +17,13 @@ protocol DropPinGeocodeDelegate {
 class DropPinGeocoder: CLGeocoder {
     var delegate: DropPinGeocodeDelegate?
     
-    func forwardGeocoding(address: String) -> [String: AnyObject] {
+    func forwardGeocoding(address: String) -> [String: AnyObject]  {
         var userInfo = [String: AnyObject]()
         CLGeocoder().geocodeAddressString(address) { (placemarks, error) in
             if error != nil {
                 print("\(error)")
             }
+            if placemarks != nil {
             if (placemarks?.count)! > 0 {
                 let placemark = placemarks?[0]
                 let location = placemark?.location
@@ -38,7 +39,12 @@ class DropPinGeocoder: CLGeocoder {
             }else {
                 print("didn't find anything")
             }
+            }else {
+                print("bad search string")
+            
+            }
         }
+        
     return userInfo
     }
     

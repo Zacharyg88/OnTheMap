@@ -53,6 +53,7 @@ class UdacityClient: NSObject {
                 print("oops!")
                 return
             }
+            print(parsedResults)
             
             completionHandlerforTaskForPostSession(parsedResults as AnyObject?, error as NSError?)
             
@@ -91,6 +92,8 @@ class UdacityClient: NSObject {
                 print("Couldn't Parse Delete Session Data")
                 return
             }
+            print(parsedResult)
+            
             completionHandlerForTaskForDeleteSession(parsedResult as AnyObject, error as NSError?)
         }
         task.resume()
@@ -118,6 +121,8 @@ class UdacityClient: NSObject {
                 print("Couldn't Parse Public User Data JSON")
                 return
             }
+            print(parsedResults)
+            
             completionHandlerFortaskForGetPublicUserData(parsedResults as AnyObject?, error as NSError?)
         }
         task.resume()

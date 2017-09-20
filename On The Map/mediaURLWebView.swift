@@ -13,20 +13,32 @@ class mediaURLWebView: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webView = UIWebView()
     @IBOutlet weak var navBar = UINavigationBar()
     @IBOutlet weak var doneButton = UIButton()
+    @IBOutlet weak var activityIndicator = UIActivityIndicatorView()
     
-    var mediaURL = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator?.startAnimating()
         webView?.scalesPageToFit = true
         webView?.scrollView.isScrollEnabled = true
-        print(mediaURL)
         
-        let request = URLRequest(url: URL(string: "https://\(ParseClient.parseConstants.currentMediaURL)")!)
+        if ParseClient.parseConstants.currentMediaURL != "" {
+        let mediaURL = URL(string: (ParseClient.parseConstants.currentMediaURL))
+        let request = URLRequest(url: mediaURL!)
         webView?.loadRequest(request)
-        
+        }else {
+            let alert = UIAlertController(title: "Missing Media URL", message: "There doesn't appear to be a Media URL associated with this user.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+                
+                }))
+        }
         
     }
     
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        activityIndicator?.stopAnimating()
+        activityIndicator?.isHidden = true
+    }
     
 
     @IBAction func dismissMediaURL() {

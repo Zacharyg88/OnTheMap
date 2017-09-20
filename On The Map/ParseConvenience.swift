@@ -13,18 +13,17 @@ extension ParseClient  {
     func populateMap(convenienceMethodForHandlerForPopulateMap: @escaping (_ success: Bool, _ errorString: String) -> Void) {
         
         ParseClient.sharedInstance().taskForGetStudentLocations { (studentLocations, error) in
-        
+            
             if error != nil {
                 convenienceMethodForHandlerForPopulateMap(false, "Couldn't Parse Student Location Data")
             }else{
-            parseConstants.studentLocations = studentLocations as! [[String : AnyObject]]
+                
+                parseConstants.studentLocations = studentLocations 
                 
             }
-                convenienceMethodForHandlerForPopulateMap(true, "")
+            convenienceMethodForHandlerForPopulateMap(true, "")
         }
         
     }
-    
-    
-    
+
 }

@@ -15,8 +15,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var logoutButton = UIBarButtonItem()
     @IBOutlet weak var dropPinButton = UIBarButtonItem()
 
-    
+
     let mediaWebView = mediaURLWebView()
+    let parseLocations = ParseClient.parseConstants.studentLocations
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,20 +43,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+
+    
     override func viewWillAppear(_ animated: Bool) {
         var pins = [MKAnnotation]()
         
-        for studentLocation in ParseClient.parseConstants.studentLocations {
-            print(studentLocation)
-            if let latitude = studentLocation["latitude"] as? Double {
-                if let longitude = studentLocation["longitude"] as? Double {
+
+ 
+        for studentLocation in parseLocations {
+            
+            if let latitude = studentLocation.latitude as? Double {
+                if let longitude = studentLocation.longitude as? Double {
                     let lat = CLLocationDegrees(latitude)
                     let lon = CLLocationDegrees(longitude)
             
                     let latlon = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             
-                    let userName = "\(studentLocation["firstName"] as! String, studentLocation["lastName"] as! String)"
-                    let userSite = studentLocation["mediaURL"] as! String
+                    let userName = (("\((studentLocation.firstName)) \((studentLocation.lastName))") )
+                    let userSite = (studentLocation.mediaURL)
             
             
                     let pin = MKPointAnnotation()
@@ -106,7 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBAction func logout() {
         UdacityClient.sharedInstance().logoutOfUdacity { (success, errorString) in
             if success {
-                self.performSegue(withIdentifier: "logoutSegue", sender: self)
+                self.dismiss(animated: true, completion: nil)
                 
             } else {
                 print("Couldn't Logout")

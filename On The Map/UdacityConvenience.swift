@@ -17,10 +17,13 @@ extension UdacityClient {
 
         taskForPostSession(email, password) { (parsedResult, error) in
             
-            if error != nil {
-                print("There was an error! - \(error)")
+            if (parsedResult?["error"]!) != nil {
+                print("There was an error! - \(parsedResult?["error"])")
+                convenienecMethodForAuthenticateAppUser(false, "\(parsedResult?["error"])")
                 return
+                
             } else {
+                
                 guard var sessionData = parsedResult?["session"] as! [String: AnyObject]! else{
                 return
                 }

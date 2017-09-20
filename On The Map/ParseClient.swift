@@ -11,7 +11,9 @@ import MapKit
 
 class ParseClient: NSObject, MKMapViewDelegate{
     
-    func taskForGetStudentLocations(completionHandlerForGetStudentLocations: @escaping (_ results: AnyObject, _ error: NSError?) -> Void) {
+    
+    
+    func taskForGetStudentLocations(completionHandlerForGetStudentLocations: @escaping (_ results: [studentInformation], _ error: NSError?) -> Void) {
         let parseURL = URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100")
         
         let request = NSMutableURLRequest(url:parseURL!)
@@ -27,6 +29,7 @@ class ParseClient: NSObject, MKMapViewDelegate{
             
             var parsedResults = [String:Any]()
             var studentLocations = [[String:Any]]()
+            var studentInformationArray: [studentInformation] = []
             do {
                 parsedResults = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: Any]
             }catch {
@@ -34,27 +37,48 @@ class ParseClient: NSObject, MKMapViewDelegate{
                 return
             }
             
-            studentLocations = parsedResults["results"] as! [[String : Any]]
-                        
-            completionHandlerForGetStudentLocations(studentLocations as AnyObject, error as NSError?)
+            guard parsedResults["results"] != nil else {
+                print("parsed results returned nil")
+                return
+            }
+            let results = parsedResults["results"] as! [[String: AnyObject]]
+            for result in results {
+                if result.count == 10 {
+                    studentLocations.append(result)
+                }
+            }
+            print(studentLocations)
+            
+            for student in studentLocations {
+                let studentCase = studentInformation(firstName: student["firstName"] as! String, lastName: student["lastName"] as! String, mediaURL: student["mediaURL"] as! String, createdAt: student["createdAt"] as! String, updatedAt: student["updatedAt"] as! String, latitude: student["latitude"] as! Double, longitude: student["longitude"] as! Double, mapString: student["mapString"] as! String)
+                
+                studentInformationArray.append(studentCase)
+            }
+            print(studentInformationArray)
+            
+            completionHandlerForGetStudentLocations(studentInformationArray as [ParseClient.studentInformation], error as NSError?)
         }
         task.resume()
     }
     
-    func taskForPostStudentLocation(userInfo: [String: AnyObject], completionHandlerForPostStudentLocations: @escaping (_ results: AnyObject, _ error: NSError?)-> Void) {
+    func taskForPostStudentLocation(userInfo: studentInformation, completionHandlerForPostStudentLocations: @escaping (_ results: AnyObject , _ error: NSError?)-> Void) {
         let parseURL = URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")
         
         let request = NSMutableURLRequest(url: parseURL!)
+        request.httpMethod = "POST"
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"\(UdacityClient.udacityConstants.firstName)\", \"lastName\": \"\(UdacityClient.udacityConstants.lastName)\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \(UdacityClient.udacityConstants.mapString)\",\"latitude\": \(userInfo["latitude"]), \"longitude\": \(userInfo["longitude"])}".data(using: String.Encoding.utf8)
-        
+        request.httpBody = "{\"uniqueKey\": \"\(UdacityClient.udacityConstants.userID)\", \"firstName\": \"\(userInfo.firstName)\", \"lastName\": \"\(userInfo.lastName)\",\"mapString\": \"\(userInfo.mapString)\", \"mediaURL\": \"\(userInfo.mediaURL)\",\"latitude\": \(userInfo.latitude), \"longitude\": \(userInfo.longitude)}".data(using: String.Encoding.utf8)
+
+        request.timeoutInterval = 120
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
                 completionHandlerForPostStudentLocations("" as AnyObject, error as NSError?)
             }else {
+            print(data)
+                
                 completionHandlerForPostStudentLocations(data as AnyObject, nil)
             }
         }
