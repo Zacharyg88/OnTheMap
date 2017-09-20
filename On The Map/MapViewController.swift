@@ -14,21 +14,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView = MKMapView()
     @IBOutlet weak var logoutButton = UIBarButtonItem()
     @IBOutlet weak var dropPinButton = UIBarButtonItem()
+    @IBOutlet weak var updateUserInfo = UIBarButtonItem()
 
 
     let mediaWebView = mediaURLWebView()
-    let parseLocations = ParseClient.parseConstants.studentLocations
+//    let parseLocations = ParseClient.parseConstants.studentLocations
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView?.delegate = self
+        updateUserInfo?.isEnabled = false
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("map view select function working")
        view.canShowCallout = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(calloutTapped(sender:)))
         view.addGestureRecognizer(tapGesture)
+        if (view.annotation?.title)! == (("\((UdacityClient.udacityConstants.firstName)) \((UdacityClient.udacityConstants.lastName))") ) {
+            if ParseClient.parseConstants.objectID != "" {
+            updateUserInfo?.isEnabled = true
+            }
+        }
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
@@ -43,40 +50,35 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-
+    @IBAction func updateUserInformation() {
+    let alert = UIAlertController(title: "Update Information?", message: "You have selected your own pin! Do you wish to update your information?", preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "Yes!", style: UIAlertActionStyle.default, handler: { action in
+    self.performSegue(withIdentifier: "ShowDropPinView", sender: action)
+        alert.addAction(UIAlertAction(title: "No Thanks!", style: UIAlertActionStyle.cancel, handler: nil))
+    }))
+    self.present(alert, animated: true, completion: nil)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         var pins = [MKAnnotation]()
-        
-
- 
-        for studentLocation in parseLocations {
-            
+        for studentLocation in ParseClient.parseConstants.studentLocations {
             if let latitude = studentLocation.latitude as? Double {
                 if let longitude = studentLocation.longitude as? Double {
                     let lat = CLLocationDegrees(latitude)
                     let lon = CLLocationDegrees(longitude)
-            
                     let latlon = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            
                     let userName = (("\((studentLocation.firstName)) \((studentLocation.lastName))") )
                     let userSite = (studentLocation.mediaURL)
-            
-            
                     let pin = MKPointAnnotation()
                     pin.coordinate = latlon
                     pin.title = userName
                     pin.subtitle = userSite
-            
-            
                     pins.append(pin)
                 }
             }
         }
         ParseClient.parseConstants.pins = pins
-        self.mapView?.addAnnotations(pins)
-                
-            
+        self.mapView?.addAnnotations(ParseClient.parseConstants.pins as! [MKAnnotation])
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             
@@ -97,7 +99,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             return pinView
         }
-
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
             if control == view.rightCalloutAccessoryView {
                 let app = UIApplication.shared

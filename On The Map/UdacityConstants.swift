@@ -16,8 +16,8 @@ extension UdacityClient {
     struct udacityConstants {
         static var userID =  ""
         static var sessionID = ""
-        static var firstName = ""
-        static var lastName = ""
+        static var firstName = "Mark"
+        static var lastName = "Kram"
         static var mapString = ""
         
     }

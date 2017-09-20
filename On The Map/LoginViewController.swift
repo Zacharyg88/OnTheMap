@@ -14,6 +14,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginEmail = UITextField()
     @IBOutlet weak var loginPassword = UITextField()
     @IBOutlet weak var activityIndicator = UIActivityIndicatorView()
+    @IBOutlet weak var loginView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,12 +118,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func keyboardWillShow(_ notification: Notification) {
-            view.frame.origin.y = 0 - getKeyboardHeight(notification)
+            loginView?.frame.origin.y = 0 - getKeyboardHeight(notification)
     }
     
     func keyboardWillHide (_ notification: Notification) {
         
-        view.frame.origin.y = 0.0
+        loginView?.frame.origin.y = 0.0
     }
     
     

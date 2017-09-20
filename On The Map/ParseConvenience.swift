@@ -25,5 +25,9 @@ extension ParseClient  {
         }
         
     }
+    
+    func editCurrentUserData(convenienceMethodForHandlerForEditCurrentUserData: @escaping (_ success: Bool, _ errorString: String) -> Void) {
+        
+    }
 
 }

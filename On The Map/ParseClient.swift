@@ -70,38 +70,55 @@ class ParseClient: NSObject, MKMapViewDelegate{
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = "{\"uniqueKey\": \"\(UdacityClient.udacityConstants.userID)\", \"firstName\": \"\(userInfo.firstName)\", \"lastName\": \"\(userInfo.lastName)\",\"mapString\": \"\(userInfo.mapString)\", \"mediaURL\": \"\(userInfo.mediaURL)\",\"latitude\": \(userInfo.latitude), \"longitude\": \(userInfo.longitude)}".data(using: String.Encoding.utf8)
-
+        
         request.timeoutInterval = 120
         let session = URLSession.shared
+        var parsedData = [String: String]()
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
                 completionHandlerForPostStudentLocations("" as AnyObject, error as NSError?)
             }else {
-            print(data)
+                do {
+                    parsedData = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String : String]
+                }
+                print(parsedData)
                 
-                completionHandlerForPostStudentLocations(data as AnyObject, nil)
+                completionHandlerForPostStudentLocations(parsedData as AnyObject, nil)
             }
         }
         task.resume()
     }
     
-    func taskForPutStudentLocation(userInfo: [String: AnyObject], completeionHandlerForPutStudentLocations: @escaping (_ results: AnyObject, _ error: NSError?)-> Void){
+    func taskForPutStudentLocation(userInfo: studentInformation, completeionHandlerForPutStudentLocations: @escaping (_ results: AnyObject, _ error: NSError?)-> Void){
         
-        let urlString = "https://parse.udacity.com/parse/classes/StudentLocation/8ZExGR5uX8"
+        print(userInfo)
+        
+        
+        let urlString = "https://parse.udacity.com/parse/classes/StudentLocation/\(ParseClient.parseConstants.objectID)"
         let url = URL(string: urlString)
         let request = NSMutableURLRequest(url: url!)
         request.httpMethod = "PUT"
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"\(UdacityClient.udacityConstants.firstName)\", \"lastName\": \"\(UdacityClient.udacityConstants.lastName)\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \(UdacityClient.udacityConstants.mapString)\",\"latitude\": \(userInfo["latitude"]), \"longitude\": \(userInfo["longitude"])}".data(using: String.Encoding.utf8)
+        request.httpBody = "{\"uniqueKey\": \"\(UdacityClient.udacityConstants.userID)\", \"firstName\": \"\(userInfo.firstName)\", \"lastName\": \"\(userInfo.lastName)\",\"mapString\": \"\(userInfo.mapString)\", \"mediaURL\": \"\(userInfo.mediaURL)\",\"latitude\": \(userInfo.latitude), \"longitude\": \(userInfo.longitude)}".data(using: String.Encoding.utf8)
+        
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            var parsedData = [String: String]()
+            print("The data is \(data)")
+            print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
+            
+            do {
+                parsedData = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String : String]
+            }
+            print(parsedData)
+            
             if error != nil {
                 completeionHandlerForPutStudentLocations("" as AnyObject, error as? NSError)
                 return
             } else {
-                completeionHandlerForPutStudentLocations(data as AnyObject, nil)
+                completeionHandlerForPutStudentLocations(parsedData as AnyObject, nil)
             }
             
         }

@@ -54,7 +54,7 @@ extension UdacityClient {
                 let userInfo = parsedResult?["user"] as AnyObject
                 let firstName = userInfo["first_name"] as! String
                 let lastName = userInfo["last_name"] as! String
-                
+
                 
                 udacityConstants.firstName = firstName
                 udacityConstants.lastName = lastName

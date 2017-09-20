@@ -29,11 +29,10 @@ class DropPinViewController: UIViewController, UITextFieldDelegate, DropPinGeoco
     let locationManager = CLLocationManager()
     
     let DropPinGeoCoder = DropPinGeocoder()
-    var studentUserInfo = ParseClient.parseConstants.currentStudentInformation
     let tableViewController = TableViewController()
     let parseClient = ParseClient()
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationTextField?.becomeFirstResponder()
@@ -89,37 +88,75 @@ class DropPinViewController: UIViewController, UITextFieldDelegate, DropPinGeoco
         submitView?.isOpaque = true
         
         
-        if (urlTextField?.text != "") {
-            ParseClient.parseConstants.currentStudentInformation.mediaURL = (urlTextField?.text)!
+        let isPreexistingUser = ParseClient.parseConstants.studentLocations.filter{$0.firstName == ParseClient.parseConstants.currentStudentInformation.firstName && $0.lastName == ParseClient.parseConstants.currentStudentInformation.lastName}
+        print(isPreexistingUser)
+        
+        
+        if isPreexistingUser.count > 0 {
+            print(isPreexistingUser.count)
+            let currentUserIndex = ParseClient.parseConstants.studentLocations.index(where: {$0.firstName == ParseClient.parseConstants.currentStudentInformation.firstName && $0.lastName == ParseClient.parseConstants.currentStudentInformation.lastName})
+            print((currentUserIndex)!)
+
+            if (urlTextField?.text != "") {
+                ParseClient.parseConstants.studentLocations.remove(at: currentUserIndex!)
+                ParseClient.parseConstants.currentStudentInformation.mediaURL = (urlTextField?.text)!
+                
+                ParseClient.sharedInstance().taskForPutStudentLocation(userInfo: ParseClient.parseConstants.currentStudentInformation) { (results, error) in
+                    if error != nil {
+                        let alert = UIAlertController(title: "Couldn't edit users parse data", message: "We were unable to edit your data. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.cancel, handler: { action in
+                            self.activityIndicator?.stopAnimating()
+                            self.activityIndicator?.isHidden = true
+                            ParseClient.parseConstants.currentStudentInformation.latitude = 0
+                            ParseClient.parseConstants.currentStudentInformation.longitude = 0
+                            self.submitView?.isHidden = true
+                            self.findLocationView?.isHidden = false
+                            self.locationTextField?.text = ""
+                            return
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }else {
+                        ParseClient.parseConstants.currentStudentInformation.updatedAt = (results["updatedAt"] as! String)
+                        ParseClient.parseConstants.studentLocations.append(ParseClient.parseConstants.currentStudentInformation)
+                        print("successfully edited user information")
+                        
+                        self.dismiss(animated: true, completion: nil)
+                    }
+            }
             
-            
-            ParseClient.sharedInstance().taskForPostStudentLocation(userInfo: studentUserInfo) { (results, error) in
-                print(results)
+            }
+        }else {
+            if (urlTextField?.text != "") {
+                ParseClient.parseConstants.currentStudentInformation.mediaURL = (urlTextField?.text)!
                 
                 
-                if error != nil {
-                    let alert = UIAlertController(title: "Oops!", message: "There was an error adding your location to the Parse Servers. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { action in
-                        self.activityIndicator?.stopAnimating()
-                        self.activityIndicator?.isHidden = true
-                        self.studentUserInfo.latitude = 0
-                        self.studentUserInfo.longitude = 0
-                        self.submitView?.isHidden = true
-                        self.findLocationView?.isHidden = false
-                        self.locationTextField?.text = ""
-                        return
-                    }))
-                    self.present(alert, animated: true, completion: nil)
-                }else {
-                  print(results)
-                    
-                    ParseClient.parseConstants.currentStudentInformation.createdAt = (results[2] as! String)
-                    print(ParseClient.parseConstants.currentStudentInformation)
-                    
-                    
-                    ParseClient.parseConstants.studentLocations.append(ParseClient.parseConstants.currentStudentInformation)
-                    self.dismiss(animated: true, completion: nil)
-                    
+                ParseClient.sharedInstance().taskForPostStudentLocation(userInfo: ParseClient.parseConstants.currentStudentInformation) { (results, error) in
+                    if error != nil {
+                        let alert = UIAlertController(title: "Oops!", message: "There was an error adding your location to the Parse Servers. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { action in
+                            self.activityIndicator?.stopAnimating()
+                            self.activityIndicator?.isHidden = true
+                            ParseClient.parseConstants.currentStudentInformation.latitude = 0
+                            ParseClient.parseConstants.currentStudentInformation.longitude = 0
+                            self.submitView?.isHidden = true
+                            self.findLocationView?.isHidden = false
+                            self.locationTextField?.text = ""
+                            return
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }else {
+                        
+                        
+                        ParseClient.parseConstants.currentStudentInformation.createdAt = (results["createdAt"] as! String)
+                        ParseClient.parseConstants.objectID = (results["objectId"] as! String)
+                        print(ParseClient.parseConstants.currentStudentInformation)
+                        
+                        
+                        ParseClient.parseConstants.studentLocations.append(ParseClient.parseConstants.currentStudentInformation)
+                        print("successfully posted user information")
+                        self.dismiss(animated: true, completion: nil)
+                        
+                    }
                 }
             }
         }
