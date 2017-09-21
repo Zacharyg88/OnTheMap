@@ -46,7 +46,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let view = sender.view as! MKAnnotationView
         if let annotation = view.annotation as? MKPointAnnotation {
             ParseClient.parseConstants.currentMediaURL = annotation.subtitle!
-            performSegue(withIdentifier: "mediaURLSegue", sender: annotation)
+            let url = NSURL(string: (annotation.subtitle)!)
+            UIApplication.shared.open(url as! URL)
         }
     }
     

@@ -19,6 +19,7 @@ extension UdacityClient {
         static var firstName = "Mark"
         static var lastName = "Kram"
         static var mapString = ""
+        static var uniqueKey = ""
         
     }
 }

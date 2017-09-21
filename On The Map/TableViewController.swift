@@ -28,7 +28,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         ParseClient.parseConstants.currentMediaURL = (cell?.detailTextLabel?.text)!
-        performSegue(withIdentifier: "mediaURLSegue", sender: self)
+        let url = NSURL(string: (cell?.detailTextLabel?.text)!)
+        UIApplication.shared.open(url as! URL)
     }
     
     

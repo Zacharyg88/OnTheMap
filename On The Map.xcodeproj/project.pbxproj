@@ -22,6 +22,7 @@
 		92C85E4D1F58A45800CF08F8 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C85E4C1F58A45800CF08F8 /* TableViewController.swift */; };
 		92E115EC1F682A510059C28F /* DropPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E115EB1F682A510059C28F /* DropPinViewController.swift */; };
 		92E115EF1F6839120059C28F /* GeoCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E115EE1F6839120059C28F /* GeoCoder.swift */; };
+		92E805541F7363440047D4DD /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E805531F7363440047D4DD /* Reachability.swift */; };
 		92E85EC91F696EF00000ED2D /* SignUpWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E85EC81F696EF00000ED2D /* SignUpWebView.swift */; };
 		92E85ECB1F6B06730000ED2D /* mediaURLWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E85ECA1F6B06720000ED2D /* mediaURLWebView.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		92C85E4C1F58A45800CF08F8 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		92E115EB1F682A510059C28F /* DropPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropPinViewController.swift; sourceTree = "<group>"; };
 		92E115EE1F6839120059C28F /* GeoCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoCoder.swift; sourceTree = "<group>"; };
+		92E805531F7363440047D4DD /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		92E85EC81F696EF00000ED2D /* SignUpWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpWebView.swift; sourceTree = "<group>"; };
 		92E85ECA1F6B06720000ED2D /* mediaURLWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mediaURLWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +109,7 @@
 				92BB50A71F4CB0D700C0293B /* Assets.xcassets */,
 				92BB50A91F4CB0D700C0293B /* LaunchScreen.storyboard */,
 				92BB50AC1F4CB0D700C0293B /* Info.plist */,
+				92E805531F7363440047D4DD /* Reachability.swift */,
 			);
 			path = "On The Map";
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				92E115EF1F6839120059C28F /* GeoCoder.swift in Sources */,
 				92BB50A11F4CB0D600C0293B /* AppDelegate.swift in Sources */,
 				92BB50B51F4DDF5800C0293B /* MapViewController.swift in Sources */,
+				92E805541F7363440047D4DD /* Reachability.swift in Sources */,
 				92C85E4D1F58A45800CF08F8 /* TableViewController.swift in Sources */,
 				922C9EE61F571053000DEB37 /* ParseClient.swift in Sources */,
 				92E85ECB1F6B06730000ED2D /* mediaURLWebView.swift in Sources */,

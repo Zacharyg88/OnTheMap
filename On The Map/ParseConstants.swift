@@ -15,7 +15,7 @@ extension ParseClient {
         static var pins = [AnyObject]()
         static var currentMediaURL = String()
         static var objectID = String()
-        static var currentStudentInformation = studentInformation(firstName: "", lastName: "", mediaURL: "", createdAt: "", updatedAt: "", latitude: 0, longitude: 0, mapString: "")
+        static var currentStudentInformation = studentInformation(fromDictionary: [String:AnyObject]())
     }
     
     struct studentInformation {
@@ -27,5 +27,17 @@ extension ParseClient {
         var latitude: Double
         var longitude: Double
         var mapString: String
-    }    
+        
+        init(fromDictionary studentDict: [String: AnyObject]){
+            
+            firstName = studentDict["firstName"] as? String ?? ""
+            lastName = studentDict["lastName"] as? String ?? ""
+            mediaURL = studentDict["mediaURL"] as? String ?? ""
+            createdAt = studentDict["createdAt"] as? String ?? ""
+            updatedAt = studentDict["updatedAt"] as? String ?? ""
+            latitude = studentDict["latitude"] as? Double ?? 0
+            longitude = studentDict["longitude"] as? Double ?? 0
+            mapString = studentDict["mapString"] as? String ?? ""
+        }
+    }
 }
